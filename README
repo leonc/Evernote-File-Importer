@@ -1,0 +1,40 @@
+	This AppleScript and work flow are based off the work of Ken Clark, here:
+	http://kenclark.me/2009/09/using-mac-os-x-services-to-import-files-into-evernote/
+	
+	I extended that script just a bit:
+		1. It used the last modified date of the file as the creation date of the note.
+		2. It can put the note into a specific folder.
+		3. It can add tags to the note automatically.
+		4. For the title of the note, it drops the extension and converts "-" and "_"
+		   to spaces.
+		   
+	I also borrowed the replaceText funciton from Bruce Phillips available on this thread: http://macscripter.net/viewtopic.php?id=18551
+	
+	To set this up:
+	1. Tweak the script.
+		a. set importFolder to the name of the folder you want all your notes to import into.
+		   If you want them all in your default folder, you don't need to set a folder name 
+		   but you would have to remove the "folder importFolder" from the "create note" line.
+		b. set the tags you want on these notes. This version adds a tag called 'file import'.
+		   You can add more by adding lines like:
+		   	set thisTags to thisTags & "some tag you want"
+			set thisTags to thisTags & "some other tag"
+	2. Then follow Ken's instructions, replicated here for convenience:
+		a. Launch Automator and select "service" from the icons.
+		b. Change "service receives selected" to "files and folders". Leave "in" set to "any application" and leave "replaces selected text" unchecked.
+		c. In the left column, under Library, click on "Utilities" then click "Run AppleScript" in the column second from the left.
+		d. Paste this script into the AppleScript text box.
+		e. Go to File..Save As and name the service "File | Import to Evernote"
+		f. If you want, set a keyboard shortcut via System Preferences...Keyboard...Keyboard Shortcuts.
+		g. In Finder, just right click on a file or several selected files and click in "File | Import to Evernote" to import the contents of the file to Evernote.
+
+	TODO items:
+	1. Add the date of the import as a tag. Whenever I tried this, it tanked Evernote, leaking memory and sucking up CPU.
+		-- set thisStringDate to ((month of (current date) & " " & day of (current date) & ", " & year of (current date)) as string)
+		-- set thisStringDate to date string of (current date)
+		-- display dialog thisStringDate
+		-- set thisTags to thisTags & thisStringDate
+		-- display dialog "added to list"
+	2. Add more (any?) error handling.
+	
+	
